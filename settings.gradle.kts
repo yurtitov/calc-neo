@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "CalcNeo"
 include(":app")
+include(":calclib")

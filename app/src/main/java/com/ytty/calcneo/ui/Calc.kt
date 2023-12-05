@@ -6,45 +6,47 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ytty.calcneo.CalcViewModel
+import com.ytty.calcneo.CalcViewModel.Action.AdditionClick
+import com.ytty.calcneo.CalcViewModel.Action.CleanClick
+import com.ytty.calcneo.CalcViewModel.Action.CommaClick
+import com.ytty.calcneo.CalcViewModel.Action.DigitClick
+import com.ytty.calcneo.CalcViewModel.Action.DivisionClick
+import com.ytty.calcneo.CalcViewModel.Action.EqualClick
+import com.ytty.calcneo.CalcViewModel.Action.MultiplicationClick
+import com.ytty.calcneo.CalcViewModel.Action.PercentClick
+import com.ytty.calcneo.CalcViewModel.Action.PlusMinusSignClick
+import com.ytty.calcneo.CalcViewModel.Action.SubtractionClick
 import com.ytty.calcneo.ui.display.Display
 import com.ytty.calcneo.ui.keyboard.Keyboard
 import com.ytty.calcneo.ui.theme.CalcNeoTheme
 
 @Composable
 fun Calc(
-    displayText: String,
+    state: CalcViewModel.State,
     modifier: Modifier = Modifier,
-    onDigitClick: (digit: Int) -> Unit,
-    onCleanClick: () -> Unit,
-    onPlusMinusSignClick: () -> Unit,
-    onPercentClick: () -> Unit,
-    onDivisionClick: () -> Unit,
-    onMultiplicationClick: () -> Unit,
-    onSubtractionClick: () -> Unit,
-    onAdditionClick: () -> Unit,
-    onCommaClick: () -> Unit,
-    onEqualClick: () -> Unit,
+    onAction: (action: CalcViewModel.Action) -> Unit
 ) {
     Column(
         modifier = modifier
     ) {
         Display(
-            text = displayText,
+            text = state.displayText,
             modifier = Modifier
                 .width(256.dp)
         )
 
         Keyboard(
-            onDigitClick = onDigitClick,
-            onCleanClick = onCleanClick,
-            onPlusMinusSignClick = onPlusMinusSignClick,
-            onPercentClick = onPercentClick,
-            onDivisionClick = onDivisionClick,
-            onMultiplicationClick = onMultiplicationClick,
-            onSubtractionClick = onSubtractionClick,
-            onAdditionClick = onAdditionClick,
-            onCommaClick = onCommaClick,
-            onEqualClick = onEqualClick
+            onDigitClick = { onAction(DigitClick(it)) },
+            onCleanClick = { onAction(CleanClick) },
+            onPlusMinusSignClick = { onAction(PlusMinusSignClick) },
+            onPercentClick = { onAction(PercentClick) },
+            onDivisionClick = { onAction(DivisionClick) },
+            onMultiplicationClick = { onAction(MultiplicationClick) },
+            onSubtractionClick = { onAction(SubtractionClick) },
+            onAdditionClick = { onAction(AdditionClick) },
+            onCommaClick = { onAction(CommaClick) },
+            onEqualClick = { onAction(EqualClick) }
         )
     }
 
@@ -55,17 +57,8 @@ fun Calc(
 fun CalcPreview() {
     CalcNeoTheme {
         Calc(
-            displayText = "555.123",
-            onDigitClick = {},
-            onCleanClick = {},
-            onPlusMinusSignClick = {},
-            onPercentClick = {},
-            onDivisionClick = {},
-            onMultiplicationClick = {},
-            onSubtractionClick = {},
-            onAdditionClick = {},
-            onCommaClick = {},
-            onEqualClick = {}
+            state = CalcViewModel.State.empty(),
+            onAction = {}
         )
     }
 }
